@@ -22,7 +22,17 @@ export const zodMetaParser = (schema: z.ZodTypeAny): TransformedProperties => {
     const transformed: TransformedProperties = {}
     for (const key in properties) {
       if (properties[key].type === "object" && properties[key].properties) {
-        transformed[key] = transformProperties(properties[key].properties)
+        const nestedTransformed = transformProperties(
+          properties[key].properties,
+        )
+        if (properties[key].description) {
+          transformed[key] = {
+            _meta: properties[key].description,
+            ...nestedTransformed,
+          }
+        } else {
+          transformed[key] = nestedTransformed
+        }
       } else if (properties[key].description) {
         transformed[key] = { _meta: properties[key].description }
       }
@@ -40,16 +50,3 @@ export const zodMetaParser = (schema: z.ZodTypeAny): TransformedProperties => {
 
   return result
 }
-
-console.log(
-  zodMetaParser(
-    z.object({
-      boolean: z.string().describe("boolean description"),
-      object: z
-        .object({
-          string: z.string().describe("string description"),
-        })
-        .describe("object description"),
-    }),
-  ),
-)

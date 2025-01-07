@@ -1,7 +1,7 @@
 {
   "name": "zod-meta-parser",
   "version": "0.0.1",
-  "description": "zod-meta-parser",
+  "description": "A utility to extract metadata descriptions from Zod schemas into a structured format.",
   "license": "MIT",
   "author": {
     "name": "Neeraj Dalal",
@@ -12,7 +12,8 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then simple-git-hooks; fi",
-    "publish:latest": "NODE_ENV=production changeset publish"
+    "publish:latest": "NODE_ENV=production changeset publish",
+    "test": "bun test/index.ts"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
@@ -21,7 +22,15 @@
   "repository": "nrjdalal/zod-meta-parser",
   "homepage": "https://github.com/nrjdalal/zod-meta-parser#readme",
   "bugs": "https://github.com/nrjdalal/zod-meta-parser/issues",
-  "keywords": [],
+  "keywords": [
+    "zod",
+    "meta",
+    "parser",
+    "schema",
+    "json",
+    "api",
+    "conversion"
+  ],
   "type": "module",
   "files": [
     "dist"
