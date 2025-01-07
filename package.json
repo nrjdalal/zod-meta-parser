@@ -1,6 +1,6 @@
 {
   "name": "zod-meta-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A utility to extract metadata descriptions from Zod schemas into a structured format.",
   "license": "MIT",
   "author": {
