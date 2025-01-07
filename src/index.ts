@@ -12,7 +12,7 @@ interface JsonSchema {
 }
 
 interface TransformedProperties {
-  [key: string]: { _meta: string } | TransformedProperties
+  [key: string]: { _meta: any } | TransformedProperties
 }
 
 export const zodMetaParser = (schema: z.ZodTypeAny): TransformedProperties => {
@@ -21,20 +21,31 @@ export const zodMetaParser = (schema: z.ZodTypeAny): TransformedProperties => {
   ): TransformedProperties {
     const transformed: TransformedProperties = {}
     for (const key in properties) {
-      if (properties[key].type === "object" && properties[key].properties) {
-        const nestedTransformed = transformProperties(
-          properties[key].properties,
-        )
-        if (properties[key].description) {
+      const property = properties[key]
+      if (property.type === "object" && property.properties) {
+        const nestedTransformed = transformProperties(property.properties)
+        if (property.description) {
+          let parsedDescription
+          try {
+            parsedDescription = JSON.parse(property.description)
+          } catch {
+            parsedDescription = property.description
+          }
           transformed[key] = {
-            _meta: properties[key].description,
+            _meta: parsedDescription,
             ...nestedTransformed,
           }
         } else {
           transformed[key] = nestedTransformed
         }
-      } else if (properties[key].description) {
-        transformed[key] = { _meta: properties[key].description }
+      } else if (property.description) {
+        let parsedDescription
+        try {
+          parsedDescription = JSON.parse(property.description)
+        } catch {
+          parsedDescription = property.description
+        }
+        transformed[key] = { _meta: parsedDescription }
       }
     }
     return transformed

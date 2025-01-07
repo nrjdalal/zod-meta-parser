@@ -13,7 +13,7 @@
     "build": "tsup",
     "prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then simple-git-hooks; fi",
     "publish:latest": "NODE_ENV=production changeset publish",
-    "test": "bun test/index.ts"
+    "test": "bun run build && bun test/index.ts"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",

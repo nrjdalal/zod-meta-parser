@@ -15,34 +15,35 @@
 import { z } from "zod"
 import { zodMetaParser } from "zod-meta-parser"
 
-const mySchema = z
-  .object({
-    myString: z.string().describe("A string field"),
-    myNestedObject: z
-      .object({
-        myNumber: z.number().describe("A number field"),
-      })
-      .describe("A nested object"),
-  })
-  .describe("My neat object schema")
+const schema = z.object({
+  id: z.number(), // no description
+  email: z.string().describe(JSON.stringify({ unique: true })),
+  image: z
+    .string()
+    .optional()
+    .describe(JSON.stringify({ s3: true })),
+  createdAt: z.date().describe("Read-only field"),
+}),
 
-const metadata = zodMetaParser(mySchema)
-
-console.log(metadata)
+console.log(zodMetaParser(schema))
 ```
 
 #### Expected Output
 
 ```json
 {
-  "myString": {
-    "_meta": "A string field"
-  },
-  "myNestedObject": {
-    "_meta": "A nested object",
-    "myNumber": {
-      "_meta": "A number field"
+  "email": {
+    "_meta": {
+      "unique": true
     }
+  },
+  "image": {
+    "_meta": {
+      "s3": true
+    }
+  },
+  "createdAt": {
+    "_meta": "Read-only field"
   }
 }
 ```
