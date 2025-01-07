@@ -1,0 +1,49 @@
+{
+  "name": "zod-meta-parser",
+  "version": "0.0.1",
+  "description": "zod-meta-parser",
+  "license": "MIT",
+  "author": {
+    "name": "Neeraj Dalal",
+    "url": "https://nrjdalal.com",
+    "email": "admin@nrjdalal.com"
+  },
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then simple-git-hooks; fi",
+    "publish:latest": "NODE_ENV=production changeset publish"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged",
+    "commit-msg": "npx commitlint --edit $1"
+  },
+  "repository": "nrjdalal/zod-meta-parser",
+  "homepage": "https://github.com/nrjdalal/zod-meta-parser#readme",
+  "bugs": "https://github.com/nrjdalal/zod-meta-parser/issues",
+  "keywords": [],
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.10",
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
+    "@types/node": "^22.10.1",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.4.2",
+    "simple-git-hooks": "^2.11.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "zod": "^3.24.1",
+    "zod-to-json-schema": "^3.24.1"
+  }
+}
